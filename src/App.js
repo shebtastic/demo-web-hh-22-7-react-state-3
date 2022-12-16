@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./styles.css";
-import Movie from "./components/Movie/index.js";
+import Movie from "./components/Movie";
 import Form from "./components/Form";
 
 const initialMovieData = [
@@ -24,17 +24,66 @@ const initialMovieData = [
 export default function App() {
   const [movies, setMovies] = useState(initialMovieData);
 
+  function addMovie(movie) {
+    // movies.push(movie)
+    // setMovies((oldMovies) => [
+    //   ...oldMovies,
+    //   {
+    //     ...movie,
+    //     id: crypto.randomUUID()
+    //   }
+    // ])
+
+    setMovies((oldMovies) => {
+      let newMovieArray = [...oldMovies];
+
+      const movieWithId = {
+        ...movie,
+        id: crypto.randomUUID(),
+      };
+
+      newMovieArray.push(movieWithId);
+
+      return newMovieArray;
+    });
+  }
+
+  function deleteMovie(id) {
+    console.log(id);
+    setMovies((oldMovies) => oldMovies.filter((movie) => movie.id !== id));
+  }
+
+  function toggleMovieLike(id) {
+    setMovies((oldMovies) => 
+      oldMovies.map((movie) => {
+        if(movie.id !== id) {
+          return movie
+        } else {
+          return {
+            ...movie,
+            isLiked: !movie.isLiked
+          }
+        }
+      })
+    );
+  }
+  
   return (
     <div className="app">
       <h1>Favorite Movies</h1>
       <ul className="list">
         {movies.map((movie) => (
           <li key={movie.id}>
-            <Movie name={movie.name} isLiked={movie.isLiked} />
+            <Movie
+              name={movie.name}
+              isLiked={movie.isLiked}
+              onDelete={() => deleteMovie(movie.id)}
+              onToggleLike={() => toggleMovieLike(movie.id)}
+            />
           </li>
         ))}
       </ul>
-      <Form />
+      <Form onSubmit={addMovie} />
     </div>
   );
 }
