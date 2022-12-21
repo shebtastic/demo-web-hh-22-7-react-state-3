@@ -25,7 +25,6 @@ export default function App() {
   const [movies, setMovies] = useState(initialMovieData);
 
   function addMovie(movie) {
-    movies.push
     // bevorzugter weg
     setMovies((oldMovies) => [
       ...oldMovies,
