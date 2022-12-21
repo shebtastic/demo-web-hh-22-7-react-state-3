@@ -25,27 +25,29 @@ export default function App() {
   const [movies, setMovies] = useState(initialMovieData);
 
   function addMovie(movie) {
-    // movies.push(movie)
-    // setMovies((oldMovies) => [
-    //   ...oldMovies,
-    //   {
-    //     ...movie,
-    //     id: crypto.randomUUID()
-    //   }
-    // ])
-
-    setMovies((oldMovies) => {
-      let newMovieArray = [...oldMovies];
-
-      const movieWithId = {
+    movies.push
+    // bevorzugter weg
+    setMovies((oldMovies) => [
+      ...oldMovies,
+      {
         ...movie,
-        id: crypto.randomUUID(),
-      };
+        id: crypto.randomUUID()
+      }
+    ])
 
-      newMovieArray.push(movieWithId);
+    // kleinschrittigere alternative
+    //     setMovies((oldMovies) => {
+    //       let newMovieArray = [...oldMovies];
 
-      return newMovieArray;
-    });
+    //       const movieWithId = {
+    //         ...movie,
+    //         id: crypto.randomUUID(),
+    //       };
+
+    //       newMovieArray.push(movieWithId);
+
+    //       return newMovieArray;
+    //     });
   }
 
   function deleteMovie(id) {
